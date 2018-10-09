@@ -1,0 +1,47 @@
+<nav class="navbar navbar-light bg-light justify-content-between">
+  <a class="navbar-brand">Search Albums :</a>
+  <app-search (searchAlbums)="search($event)"></app-search>
+</nav>
+<div class="row content">
+  <div class="col-sm-4 video">
+    <!-- AlbumDetails -->
+    <app-album-details [album]="selectedAlbum" (onPlay)="playParent($event)"></app-album-details>
+  </div>
+  <!-- .video -->
+  <div class="col-sm-8 music">
+    <app-paginate (setPaginate)="paginate($event)"></app-paginate>
+    <h1>{{ titlePage }}</h1>
+    <!-- Pagination -->
+    <div class="card card-selected" *ngFor="let album of albums; let index = index; let odd = odd; let even = even " [ngClass]="{'card-odd': odd == true , 'card-even' : even == true }">
+      <div class="card-header">
+        {{ index + 1 }} Pop
+        <span *ngIf="status==album.ref">[play]</span>
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">
+          <a class="text-info" routerLink="/album/{{album.ref}}">{{album.title}}</a>
+        </h5>
+        <p class="card-text">{{album.description}}</p>
+        <ul *ngIf="album.tags" class="list-inline">
+          <li class="list-inline-item" *ngFor="let word of album.tags">
+            <span class="badge badge-info">{{ word }}</span>
+          </li>
+        </ul>
+        <a class="btn btn-outline-dark" href="#" role="button">en savoir +</a>
+        <ng-template [ngIf]="album.like">
+          <img class="glyph-icon" src="./assets/svg/si-glyph-heart.svg" />
+          <small>{{ album.like }}</small>
+        </ng-template>
+        <ng-template [ngIf]="album.duration">
+          <img class="glyph-icon" src="./assets/svg/si-glyph-timer.svg" />
+          <small>{{album.duration}} min</small>
+        </ng-template>
+        <button (click)="onSelect(album)" type="button" class="btn btn-dark">Details</button>
+      </div>
+    </div>
+    <app-paginate (setPaginate)="paginate($event)"></app-paginate>
+    <!-- .card -->
+    <!-- Pagination -->
+  </div>
+  <!-- .music -->
+</div>

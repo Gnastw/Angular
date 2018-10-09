@@ -1,0 +1,14 @@
+<div class="card" *ngIf="album">
+    <img *ngIf="album.url" class="card-img-top" src="{{album.url}}" alt="Group Music">
+    <div class="card-body">
+        <h5 class="card-title">{{ album.title }}</h5>
+        <p class="card-text">Name: {{ album.name }}</p>
+
+        <a (click)="play(album)" class="btn btn-primary">Play >> </a>
+
+    </div>
+    <ul class="list-group" *ngIf="list">
+        <h2>Playlist</h2>
+        <li *ngFor="let song of songs " class="list-group-item">{{song }}</li>
+    </ul>
+</div>
